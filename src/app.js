@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -13,19 +14,7 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Content Marketing Services API',
-    version: '1.0.0',
-    endpoints: {
-      auth: '/api/auth',
-      content: '/api/content',
-      campaigns: '/api/campaigns',
-      analytics: '/api/analytics',
-    },
-  });
-});
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/content', contentRoutes);
@@ -33,7 +22,10 @@ app.use('/api/campaigns', campaignRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
 app.use((req, res) => {
-  res.status(404).json({ error: 'Route not found' });
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'Route not found' });
+  }
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 app.use((err, req, res, next) => {
