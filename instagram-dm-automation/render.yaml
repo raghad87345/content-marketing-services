@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: instagram-comment-dm-automation
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: INSTAGRAM_ACCESS_TOKEN
+        sync: false
+      - key: INSTAGRAM_BUSINESS_ACCOUNT_ID
+        sync: false
+      - key: FACEBOOK_APP_SECRET
+        sync: false
+      - key: WEBHOOK_VERIFY_TOKEN
+        sync: false
+      - key: DATABASE_URL
+        value: sqlite:///./data/app.db
+      - key: GRAPH_API_VERSION
+        value: v21.0
+    disk:
+      name: instagram-automation-data
+      mountPath: /app/data
+      sizeGB: 1

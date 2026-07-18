@@ -1,0 +1,27 @@
+import logging
+
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+
+from database import init_db
+from routes import api, dashboard, webhook
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s [%(name)s] %(message)s")
+
+app = FastAPI(title="Instagram Comment-to-DM Automation")
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+app.include_router(webhook.router)
+app.include_router(api.router)
+app.include_router(dashboard.router)
+
+
+@app.on_event("startup")
+def on_startup():
+    init_db()
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}

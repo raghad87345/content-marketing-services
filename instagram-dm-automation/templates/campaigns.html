@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Campaigns — Instagram Automation{% endblock %}
+{% block content %}
+<section class="card">
+  <div class="card-header">
+    <h1>Campaigns</h1>
+    <button class="btn primary" id="new-campaign-btn">+ Add Campaign</button>
+  </div>
+  <p class="muted">
+    Each campaign watches one Instagram post for comments containing any of its keywords,
+    then publicly replies and sends the commenter a DM.
+  </p>
+  <div id="campaign-list" class="campaign-list"></div>
+</section>
+
+<div id="campaign-modal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 id="modal-title">Add Campaign</h2>
+      <button class="btn icon" id="close-modal-btn">&times;</button>
+    </div>
+    <form id="campaign-form" class="form">
+      <input type="hidden" id="campaign_id" />
+
+      <label>
+        Instagram Post ID
+        <input type="text" id="post_id" name="post_id" placeholder="e.g. 17895695668004550" required />
+      </label>
+
+      <div id="post-preview" class="post-preview hidden">
+        <img id="preview-thumb" src="" alt="Post thumbnail" />
+        <p id="preview-caption"></p>
+      </div>
+
+      <label>
+        Trigger Keywords (comma-separated)
+        <input type="text" id="keywords" name="keywords" placeholder="price, info, link" required />
+      </label>
+
+      <label>
+        Public Comment Reply
+        <textarea id="comment_reply" name="comment_reply" rows="3" placeholder="Thanks! Check your DMs 📩" required></textarea>
+      </label>
+
+      <label>
+        DM Message
+        <textarea id="dm_message" name="dm_message" rows="4" placeholder="Hey! Here's the link you asked about: ..." required></textarea>
+      </label>
+
+      <label class="checkbox-label">
+        <input type="checkbox" id="active" name="active" checked />
+        Active
+      </label>
+
+      <button type="submit" class="btn primary">Save Campaign</button>
+      <span id="campaign-status" class="status"></span>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/app.js"></script>
+<script src="/static/js/campaigns.js"></script>
+{% endblock %}
