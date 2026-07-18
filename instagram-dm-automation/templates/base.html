@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Instagram Automation{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">📸 Comment → DM Automation</div>
+      <nav class="tabs">
+        <a href="/dashboard/campaigns" class="{{ 'active' if active_page == 'campaigns' else '' }}">Campaigns</a>
+        <a href="/dashboard/settings" class="{{ 'active' if active_page == 'settings' else '' }}">Settings</a>
+      </nav>
+    </header>
+    <main class="content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
