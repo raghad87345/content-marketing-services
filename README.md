@@ -152,23 +152,48 @@ npm run lint # ESLint (خادم + واجهة)
 
 ---
 
-## النشر
+## النشر — كيف يصير الموقع «أونلاين»
 
-**Docker**
+المشروع الآن كود يعمل محليًا؛ ليصبح على الإنترنت تحتاج استضافة باسمك. أسرع ثلاثة طرق:
+
+### 1) Render (الأسهل — بلا سطر أوامر)
+
+المستودع فيه `render.yaml` جاهز:
+
+1. ادخل [render.com](https://render.com) وسجّل بحساب GitHub.
+2. **New +** → **Blueprint** → اختر مستودع `content-marketing-services` → الفرع `claude/saas-content-marketing-site-6w5c78`.
+3. اضغط **Apply**. سيولّد `JWT_SECRET` تلقائيًا ويبني وينشر.
+4. بعد ~3 دقائق تحصل على رابط مثل `https://mohtawa.onrender.com`.
+
+> الباقة المجانية على Render لا تدعم القرص الدائم: الموقع يعمل لكن البيانات تُمسح عند كل إعادة تشغيل — ممتاز للعرض والتجربة. للاستخدام الحقيقي اجعل `plan: starter` (المضبوط حاليًا) ليبقى القرص `/var/data` دائمًا.
+
+### 2) Fly.io (أداء أفضل وقرب من السوق العربي)
+
+```bash
+fly launch --no-deploy            # يقرأ fly.toml الموجود
+fly volumes create mohtawa_data --size 1
+fly secrets set JWT_SECRET="$(openssl rand -hex 32)"
+fly deploy
+```
+
+### 3) أي خادم VPS بـDocker
 
 ```bash
 docker build -t mohtawa .
-docker run -p 3000:3000 \
+docker run -d -p 80:3000 --restart unless-stopped \
   -e JWT_SECRET="$(openssl rand -hex 32)" \
-  -e NODE_ENV=production \
-  -e SEED_DEMO_DATA=false \
-  -v mohtawa-data:/app/data \
-  mohtawa
+  -e NODE_ENV=production -e TRUST_PROXY=1 \
+  -v mohtawa-data:/app/data mohtawa
 ```
 
 الصورة تعمل بمستخدم غير جذري وتتضمن `HEALTHCHECK`. **اربط وحدة تخزين دائمة على `/app/data`** — البيانات كلها هناك.
 
-**أي مضيف Node**: `npm ci --omit=dev && NODE_ENV=production npm start` خلف عاكس (nginx/Caddy) مع `TRUST_PROXY=1`.
+**بعد النشر مباشرة:**
+- اضبط `SEED_DEMO_DATA=false` إن لم ترغب بالحساب التجريبي على الإنتاج.
+- بدّل `https://mohtawa.app` في `public/index.html` و`robots.txt` و`sitemap.xml` بنطاقك.
+- أضِف `ANTHROPIC_API_KEY` من لوحة الاستضافة لتشغيل Claude في الاستوديو (اختياري).
+
+**أي مضيف Node آخر**: `npm ci --omit=dev && NODE_ENV=production npm start` خلف عاكس (nginx/Caddy) مع `TRUST_PROXY=1`.
 
 ---
 
@@ -180,7 +205,7 @@ docker run -p 3000:3000 \
 2. **قاعدة بيانات مُدارة** — مخزن JSON ممتاز لخادم واحد بقرص دائم. لتشغيل عدة نسخ، استبدل `src/db/store.js` (الواجهة قريبة من MongoDB/Postgres، وبقية الكود لا يتغير).
 3. **الخط** — الواجهة تحمّل خط Cairo من Google Fonts مع بدائل نظامية. لاستقلال كامل عن طرف ثالث، نزّل الخط إلى `public/fonts` واستبدل رابط `<link>` بـ`@font-face`.
 4. **البريد** — لا يوجد تحقق بريد أو استعادة كلمة مرور بعد؛ أضف مزوّد بريد إن احتجتهما.
-5. **النطاق** — بدّل `https://mohtawa.app` في `index.html` و`robots.txt` و`sitemap.xml` بنطاقك.
+5. **النطاق** — بدّل `https://mohtawa.app` في `index.html` و`robots.txt` و`sitemap.xml` بنطاقك، واربط النطاق من لوحة الاستضافة.
 
 ---
 
