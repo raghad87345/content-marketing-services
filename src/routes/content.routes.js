@@ -1,92 +1,126 @@
+'use strict';
+
 const express = require('express');
-const { body, validationResult } = require('express-validator');
-const Content = require('../models/Content');
-const { authenticate, authorize } = require('../middleware/auth.middleware');
+const { body } = require('express-validator');
+const { db } = require('../db/store');
+const { ApiError, asyncHandler } = require('../lib/errors');
+const { PLATFORMS } = require('../lib/trends');
+const { authenticate, withBrand } = require('../middleware/auth');
+const { handleValidation } = require('../middleware/error');
 
 const router = express.Router();
+router.use(authenticate);
 
-// GET /api/content
-router.get('/', authenticate, async (req, res) => {
-  try {
-    const { status, type, page = 1, limit = 10, search } = req.query;
-    const filter = {};
-    if (status) filter.status = status;
-    if (type) filter.type = type;
-    if (search) filter.$text = { $search: search };
+const STATUSES = ['idea', 'scheduled', 'published', 'archived'];
+const PILLARS = ['reach', 'trust', 'conversion'];
+const platformIds = PLATFORMS.map((p) => p.id);
 
-    const contents = await Content.find(filter)
-      .populate('author', 'name email')
-      .populate('campaign', 'name')
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(Number(limit));
+const METRIC_KEYS = ['views', 'saves', 'shares', 'comments', 'leads', 'watchTimeSeconds'];
 
-    const total = await Content.countDocuments(filter);
-    res.json({ contents, total, page: Number(page), pages: Math.ceil(total / limit) });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+const sanitizeMetrics = (metrics = {}) =>
+  METRIC_KEYS.reduce((acc, key) => {
+    const value = Number(metrics[key]);
+    if (Number.isFinite(value) && value >= 0) acc[key] = value;
+    return acc;
+  }, {});
 
-// GET /api/content/:id
-router.get('/:id', authenticate, async (req, res) => {
-  try {
-    const content = await Content.findById(req.params.id)
-      .populate('author', 'name email')
-      .populate('campaign', 'name');
-    if (!content) return res.status(404).json({ error: 'Content not found' });
-    res.json({ content });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+const ownedContent = (id, userId) => {
+  const content = db.contents.findOne({ id });
+  if (!content || content.ownerId !== userId) throw ApiError.notFound('المحتوى غير موجود.');
+  return content;
+};
 
-// POST /api/content
-router.post(
+router.get(
   '/',
-  authenticate,
-  [
-    body('title').trim().notEmpty().withMessage('Title is required'),
-    body('body').notEmpty().withMessage('Body is required'),
-    body('type').isIn(['article', 'blog', 'social_post', 'email', 'video_script', 'infographic']),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
-
-    try {
-      const content = await Content.create({ ...req.body, author: req.user._id });
-      res.status(201).json({ content });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-  }
+  withBrand,
+  asyncHandler(async (req, res) => {
+    const query = { brandId: req.brand.id };
+    if (req.query.status && STATUSES.includes(req.query.status)) query.status = req.query.status;
+    const contents = db.contents.find(query, { sort: { scheduledFor: 'desc' } });
+    res.json({ contents, total: contents.length });
+  })
 );
 
-// PUT /api/content/:id
-router.put('/:id', authenticate, async (req, res) => {
-  try {
-    const content = await Content.findOneAndUpdate(
-      { _id: req.params.id, author: req.user._id },
-      req.body,
-      { new: true, runValidators: true }
-    );
-    if (!content) return res.status(404).json({ error: 'Content not found or unauthorized' });
-    res.json({ content });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+router.post(
+  '/',
+  withBrand,
+  [
+    body('title').trim().isLength({ min: 2, max: 200 }).withMessage('العنوان مطلوب.'),
+    body('status').optional().isIn(STATUSES).withMessage('الحالة غير معروفة.'),
+    body('pillar').optional().isIn(PILLARS).withMessage('نوع المحتوى غير معروف.'),
+    body('platform').optional().isIn(platformIds).withMessage('المنصة غير معروفة.'),
+    body('scheduledFor').optional().isISO8601().withMessage('التاريخ غير صحيح.'),
+  ],
+  handleValidation,
+  asyncHandler(async (req, res) => {
+    const status = STATUSES.includes(req.body.status) ? req.body.status : 'idea';
+    const content = await db.contents.insert({
+      ownerId: req.user.id,
+      brandId: req.brand.id,
+      title: req.body.title.trim(),
+      body: String(req.body.body || ''),
+      hook: String(req.body.hook || ''),
+      caption: String(req.body.caption || ''),
+      cta: String(req.body.cta || ''),
+      format: String(req.body.format || 'Reel'),
+      platform: platformIds.includes(req.body.platform) ? req.body.platform : req.brand.platforms?.[0] || 'instagram',
+      pillar: PILLARS.includes(req.body.pillar) ? req.body.pillar : 'reach',
+      status,
+      ideaId: req.body.ideaId || null,
+      trendKey: req.body.trendKey || null,
+      scheduledFor: req.body.scheduledFor || null,
+      publishedAt: status === 'published' ? req.body.publishedAt || new Date().toISOString() : null,
+      metrics: sanitizeMetrics(req.body.metrics),
+    });
+    res.status(201).json({ content });
+  })
+);
 
-// DELETE /api/content/:id
-router.delete('/:id', authenticate, authorize('admin', 'editor'), async (req, res) => {
-  try {
-    const content = await Content.findByIdAndDelete(req.params.id);
-    if (!content) return res.status(404).json({ error: 'Content not found' });
-    res.json({ message: 'Content deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+router.get(
+  '/:id',
+  asyncHandler(async (req, res) => {
+    res.json({ content: ownedContent(req.params.id, req.user.id) });
+  })
+);
+
+router.patch(
+  '/:id',
+  [
+    body('status').optional().isIn(STATUSES).withMessage('الحالة غير معروفة.'),
+    body('pillar').optional().isIn(PILLARS).withMessage('نوع المحتوى غير معروف.'),
+    body('scheduledFor').optional({ nullable: true }).isISO8601().withMessage('التاريخ غير صحيح.'),
+  ],
+  handleValidation,
+  asyncHandler(async (req, res) => {
+    const existing = ownedContent(req.params.id, req.user.id);
+    const patch = {};
+    for (const field of ['title', 'body', 'hook', 'caption', 'cta', 'format', 'trendKey']) {
+      if (req.body[field] !== undefined) patch[field] = String(req.body[field]);
+    }
+    if (req.body.platform && platformIds.includes(req.body.platform)) patch.platform = req.body.platform;
+    if (req.body.pillar) patch.pillar = req.body.pillar;
+    if (req.body.scheduledFor !== undefined) patch.scheduledFor = req.body.scheduledFor;
+    if (req.body.metrics) patch.metrics = { ...existing.metrics, ...sanitizeMetrics(req.body.metrics) };
+    if (req.body.status) {
+      patch.status = req.body.status;
+      // Publishing stamps the date once; un-publishing clears it.
+      if (req.body.status === 'published' && !existing.publishedAt) {
+        patch.publishedAt = req.body.publishedAt || new Date().toISOString();
+      }
+      if (req.body.status !== 'published') patch.publishedAt = null;
+    }
+    const content = await db.contents.update({ id: req.params.id }, patch);
+    res.json({ content });
+  })
+);
+
+router.delete(
+  '/:id',
+  asyncHandler(async (req, res) => {
+    ownedContent(req.params.id, req.user.id);
+    await db.contents.remove({ id: req.params.id });
+    res.json({ ok: true });
+  })
+);
 
 module.exports = router;

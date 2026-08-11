@@ -1,75 +1,66 @@
+'use strict';
+
 const express = require('express');
-const Content = require('../models/Content');
-const Campaign = require('../models/Campaign');
-const { authenticate } = require('../middleware/auth.middleware');
+const { db } = require('../db/store');
+const { asyncHandler } = require('../lib/errors');
+const {
+  buildOverview,
+  topContent,
+  buildLearnings,
+  buildRecommendations,
+} = require('../lib/analytics');
+const { authenticate, withBrand } = require('../middleware/auth');
 
 const router = express.Router();
+router.use(authenticate, withBrand);
 
-// GET /api/analytics/overview
-router.get('/overview', authenticate, async (req, res) => {
-  try {
-    const [totalContent, totalCampaigns, publishedContent, activeCampaigns] = await Promise.all([
-      Content.countDocuments(),
-      Campaign.countDocuments(),
-      Content.countDocuments({ status: 'published' }),
-      Campaign.countDocuments({ status: 'active' }),
-    ]);
+const brandContents = (brandId) => db.contents.find({ brandId });
 
-    const contentByType = await Content.aggregate([
-      { $group: { _id: '$type', count: { $sum: 1 } } },
-    ]);
+router.get(
+  '/overview',
+  asyncHandler(async (req, res) => {
+    const days = [7, 30, 90].includes(Number(req.query.days)) ? Number(req.query.days) : 30;
+    const contents = brandContents(req.brand.id);
+    res.json({
+      overview: buildOverview(contents, days),
+      top: topContent(contents),
+      ...buildLearnings(contents),
+      recommendations: buildRecommendations(contents, req.brand),
+    });
+  })
+);
 
-    const contentByStatus = await Content.aggregate([
-      { $group: { _id: '$status', count: { $sum: 1 } } },
-    ]);
+/** Home dashboard: the few numbers worth seeing first thing in the morning. */
+router.get(
+  '/summary',
+  asyncHandler(async (req, res) => {
+    const contents = brandContents(req.brand.id);
+    const overview = buildOverview(contents, 30);
+    const now = new Date();
+    const weekAhead = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const upcoming = contents
+      .filter(
+        (content) =>
+          content.status === 'scheduled' &&
+          content.scheduledFor &&
+          new Date(content.scheduledFor) >= now &&
+          new Date(content.scheduledFor) <= weekAhead
+      )
+      .sort((a, b) => new Date(a.scheduledFor) - new Date(b.scheduledFor));
 
     res.json({
-      overview: { totalContent, totalCampaigns, publishedContent, activeCampaigns },
-      contentByType,
-      contentByStatus,
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// GET /api/analytics/campaigns/:id
-router.get('/campaigns/:id', authenticate, async (req, res) => {
-  try {
-    const campaign = await Campaign.findById(req.params.id);
-    if (!campaign) return res.status(404).json({ error: 'Campaign not found' });
-
-    const contentStats = await Content.aggregate([
-      { $match: { campaign: campaign._id } },
-      {
-        $group: {
-          _id: '$status',
-          count: { $sum: 1 },
-          totalViews: { $sum: '$views' },
-          totalLikes: { $sum: '$likes' },
-        },
+      brand: req.brand,
+      counts: {
+        ideas: db.ideas.count({ brandId: req.brand.id }),
+        scheduled: contents.filter((c) => c.status === 'scheduled').length,
+        published: contents.filter((c) => c.status === 'published').length,
       },
-    ]);
-
-    res.json({ campaign: campaign.metrics, contentStats });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// GET /api/analytics/top-content
-router.get('/top-content', authenticate, async (req, res) => {
-  try {
-    const topContent = await Content.find({ status: 'published' })
-      .sort({ views: -1, likes: -1 })
-      .limit(10)
-      .select('title type views likes publishedAt')
-      .populate('author', 'name');
-
-    res.json({ topContent });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+      overview,
+      upcoming,
+      recommendations: buildRecommendations(contents, req.brand),
+      learnings: buildLearnings(contents).learnings,
+    });
+  })
+);
 
 module.exports = router;

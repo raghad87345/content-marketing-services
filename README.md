@@ -1,87 +1,189 @@
-# Content Marketing Services API
+# MOHTAWA — نظام تشغيل التسويق بالمحتوى
 
-A RESTful API for managing content marketing operations including content creation, campaign management, and analytics.
+منصة SaaS عربية (RTL أولًا) لأصحاب المشاريع وصنّاع المحتوى والوكالات: تأخذك من اكتشاف فورمات الترند
+إلى السكربت وقائمة اللقطات، ثم إلى التقويم، ثم إلى تحليل الفيديو وقياس النتائج — وكلها مترابطة في دورة واحدة.
 
-## Features
+> **MOHTAWA — Content Marketing OS.** An Arabic-first SaaS that takes a brand from trend discovery to
+> script, calendar, video analysis and performance learning. Runs with zero external infrastructure.
 
-- **Authentication** - JWT-based auth with role-based access control (admin, editor, viewer)
-- **Content Management** - Create and manage articles, blogs, social posts, emails, video scripts, and infographics
-- **Campaign Management** - Plan and track marketing campaigns with budget and audience targeting
-- **Analytics** - Overview stats, campaign performance, and top-performing content
+---
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js >= 16
-- MongoDB
-
-### Installation
+## تشغيل سريع
 
 ```bash
-cp .env.example .env
-# Edit .env with your configuration
+cp .env.example .env      # عدّل JWT_SECRET قبل الإنتاج
 npm install
-npm run dev
+npm run dev               # http://localhost:3000
 ```
 
-### Environment Variables
+يبدأ الخادم بقاعدة بيانات ملفية داخل `data/` — لا حاجة لأي قاعدة بيانات خارجية.
+عند أول تشغيل يُنشأ حساب تجريبي مليء ببيانات فعلية:
 
-| Variable | Description | Default |
-|---|---|---|
-| `PORT` | Server port | `3000` |
-| `MONGODB_URI` | MongoDB connection string | - |
-| `JWT_SECRET` | JWT signing secret | - |
-| `JWT_EXPIRES_IN` | Token expiry | `7d` |
-
-## API Endpoints
-
-### Auth
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/auth/register` | Register a new user |
-| POST | `/api/auth/login` | Login and receive JWT |
-| GET | `/api/auth/me` | Get current user |
-
-### Content
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/content` | List all content (with filters) |
-| GET | `/api/content/:id` | Get content by ID |
-| POST | `/api/content` | Create new content |
-| PUT | `/api/content/:id` | Update content |
-| DELETE | `/api/content/:id` | Delete content |
-
-**Content Types:** `article`, `blog`, `social_post`, `email`, `video_script`, `infographic`
-
-**Content Statuses:** `draft`, `review`, `published`, `archived`
-
-### Campaigns
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/campaigns` | List all campaigns |
-| GET | `/api/campaigns/:id` | Get campaign with its content |
-| POST | `/api/campaigns` | Create new campaign |
-| PUT | `/api/campaigns/:id` | Update campaign |
-| DELETE | `/api/campaigns/:id` | Delete campaign (admin only) |
-
-**Campaign Channels:** `email`, `social`, `blog`, `seo`, `paid`, `other`
-
-### Analytics
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/analytics/overview` | Platform-wide stats |
-| GET | `/api/analytics/campaigns/:id` | Campaign performance |
-| GET | `/api/analytics/top-content` | Top performing content |
-
-## Role Permissions
-
-| Role | Permissions |
+| البريد | كلمة المرور |
 |---|---|
-| `admin` | Full access |
-| `editor` | Create, read, update content & campaigns |
-| `viewer` | Read-only access |
+| `demo@mohtawa.app` | `Mohtawa2026` |
 
-## License
+عطّله بـ `SEED_DEMO_DATA=false` في بيئة الإنتاج.
+
+---
+
+## ماذا تفعل المنصة
+
+| الوحدة | ما تقدمه | من أين تأتي الأرقام |
+|---|---|---|
+| **Trend Radar** | مكتبة فورمات محتوى مرتّبة حسب المنصة والمجال والمنطقة، بدرجة لكل فورمات | مكتبة مُنسّقة داخل المنصة؛ الدرجة = الزخم + الملاءمة − التشبّع. ليست قراءة مباشرة من واجهات المنصات الاجتماعية، والواجهة تقول ذلك صراحة |
+| **Content Studio** | هوك + 3 بدائل، سكربت مقسّم بالثواني، قائمة لقطات، كابشن، هاشتاقات، CTA | مولّد داخلي يبني من قاعدة البراند والهدف والفورمات؛ ويستخدم Claude تلقائيًا عند توفّر مفتاح API |
+| **Video Intelligence** | تقييم للهوك والإيقاع والمدة والأبعاد والنصوص والـCTA + لحظات فقدان الانتباه | قياس فعلي للملف **داخل المتصفح** (المدة، الأبعاد، تغيّرات المشهد عبر عيّنة إطارات) + ما يكتبه المستخدم. الفيديو لا يُرفع إلى الخادم |
+| **Brand Brain** | نبرة البراند والجمهور والعرض والهدف، مطبَّقة على كل مخرج | مُدخلات المستخدم |
+| **Smart Calendar** | خطة شهرية توازن بين الوصول والثقة والتحويل حسب الهدف | خوارزمية توزيع حتمية (نفس الشهر ⇒ نفس الخطة) |
+| **Analytics** | مقاييس، منحنى نمو، أفضل محتوى، وأنماط «ما الذي نجح ولماذا» | محسوبة بالكامل من المحتوى الذي سجّله المستخدم. لا تُستخرج أنماط قبل 3 منشورات على الأقل — تخبرك المنصة كم ينقصك |
+
+**ملاحظة صدق مهمة:** لا يوجد في المنتج أي رقم «مُتخيَّل». التحليلات تعمل على بياناتك أنت، ودرجات الترند
+والفيديو موصوفة داخل الواجهة بأنها تقييم استدلالي (heuristic) وليست تنبؤًا بعدد المشاهدات.
+
+---
+
+## البنية
+
+```
+src/
+  config.js            إعدادات البيئة (تفشل بوضوح إذا نقص JWT_SECRET في الإنتاج)
+  app.js               تركيب Express: helmet, CORS, ضغط, rate limiting, static, routes
+  index.js             الإقلاع + إيقاف نظيف (SIGTERM/SIGINT)
+  db/store.js          مخزن JSON ذرّي (كتابة على ملف مؤقت ثم rename، وطابور كتابة)
+  db/seed.js           الحساب التجريبي
+  lib/trends.js        مكتبة الفورمات + خوارزمية الترتيب
+  lib/studio.js        المولّد الداخلي (يعمل بلا أي مفتاح)
+  lib/ai.js            محوّل Claude (structured outputs) مع رجوع تلقائي للمولّد الداخلي
+  lib/video.js         تقييم الفيديو من القياسات
+  lib/planner.js       توزيع التقويم الشهري
+  lib/analytics.js     المقاييس والأنماط والتوصيات
+  middleware/          المصادقة، الحصص، الأخطاء
+  routes/              9 وحدات API
+public/
+  index.html           صفحة التسويق (SEO + JSON-LD + OG)
+  app.html             تطبيق لوحة التحكم
+  css/, js/            التصميم ومنطق الواجهة (بدون أي إطار عمل)
+tests/api.test.js      20 اختبارًا (تكامل + وحدة)
+```
+
+---
+
+## API
+
+كل المسارات تحت `/api`. المصادقة عبر `Authorization: Bearer <token>`.
+
+| الطريقة | المسار | الوصف |
+|---|---|---|
+| GET | `/health` · `/config` | حالة الخدمة وإعدادات الواجهة العامة |
+| POST | `/auth/register` · `/auth/login` | إنشاء حساب / دخول (محدودة المعدل) |
+| GET/PATCH | `/auth/me` | الحساب + البراندات + استهلاك الحصص |
+| POST | `/auth/change-password` | تغيير كلمة المرور |
+| GET/POST | `/brands` | قائمة/إنشاء البراندات (محكومة بحد الباقة) |
+| GET/PUT/DELETE | `/brands/:id` | إدارة براند |
+| GET | `/trends` · `/trends/filters` | الفورمات المرتّبة وخيارات الفلترة |
+| GET | `/studio/options` | خيارات الاستوديو |
+| POST | `/studio/generate` | توليد حزمة محتوى كاملة (تستهلك حصة) |
+| GET | `/studio/history[/:id]` | سجل التوليد |
+| GET/POST | `/content` | قائمة/إنشاء محتوى |
+| GET/PATCH/DELETE | `/content/:id` | إدارة عنصر محتوى وتسجيل أدائه |
+| GET | `/calendar` | خطة الشهر + المحتوى المجدول |
+| POST | `/calendar/apply` | اعتماد خانات مقترحة |
+| POST | `/video/analyze` | تحليل قياسات فيديو (تستهلك حصة) |
+| GET | `/video/history[/:id]` | سجل التحليلات |
+| GET | `/analytics/overview` · `/analytics/summary` | التحليلات والملخص |
+| GET/POST | `/billing/plans` · `/billing/subscription` | الباقات والاشتراك |
+
+الأخطاء موحّدة الشكل:
+
+```json
+{ "error": { "code": "validation_error", "message": "…", "details": [{ "field": "topic", "message": "…" }] } }
+```
+
+---
+
+## الباقات والحصص
+
+| الباقة | السعر | براندات | توليد/شهر | تحليل فيديو/شهر |
+|---|---|---|---|---|
+| Creator | 49 ر.س | 1 | 30 | 5 |
+| Business | 129 ر.س | 2 | 200 | 50 |
+| Agency | 299 ر.س | 10 | غير محدود | غير محدود |
+
+الحصص محسوبة شهريًا ومطبَّقة في الـmiddleware، وتردّ `429` مع `code: quota_exceeded` عند التجاوز.
+
+---
+
+## تفعيل Claude (اختياري)
+
+```bash
+ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_MODEL=claude-opus-5   # الافتراضي
+ANTHROPIC_EFFORT=low            # low|medium|high|xhigh|max
+```
+
+عند وجود المفتاح يكتب Claude الهوكات والسكربت والكابشن عبر **structured outputs** بمخطط JSON ثابت،
+مع تفعيل الـserver-side fallbacks (فإذا رُفض الطلب لأي سبب يُعاد تشغيله على نموذج بديل تلقائيًا).
+عند أي فشل — انقطاع، رفض، JSON غير صالح — يعود المولّد الداخلي فورًا، فلا تتعطل الميزة أبدًا.
+
+---
+
+## الأمان
+
+- كلمات المرور بـ bcrypt، والاستجابات لا تُعيد الـhash أبدًا.
+- JWT موقّع؛ ويرفض الخادم الإقلاع في الإنتاج بدون `JWT_SECRET`.
+- `helmet` مع CSP صريحة، ورؤوس أمان افتراضية.
+- تحديد معدل: 120 طلب/دقيقة للـAPI، و20 محاولة/15 دقيقة لمسارات الاعتماد.
+- تحقّق من المدخلات عبر `express-validator` على كل مسار كتابة.
+- عزل بين المستخدمين: كل قراءة/كتابة تتحقق من ملكية المورد (مغطّاة باختبارات).
+- الفيديو لا يُرفع إلى الخادم إطلاقًا.
+
+---
+
+## الاختبارات والجودة
+
+```bash
+npm test     # 20 اختبارًا: تكامل API + وحدات المنطق
+npm run lint # ESLint (خادم + واجهة)
+```
+
+يشمل الاختبار: التحقق من المدخلات، منع تعداد الحسابات، حدود الباقات، عزل المستخدمين،
+ترتيب الترندات، اكتمال حزمة المحتوى، منطق تقييم الفيديو، توزيع التقويم، وحجب الاستنتاجات عند قلة العيّنة.
+
+---
+
+## النشر
+
+**Docker**
+
+```bash
+docker build -t mohtawa .
+docker run -p 3000:3000 \
+  -e JWT_SECRET="$(openssl rand -hex 32)" \
+  -e NODE_ENV=production \
+  -e SEED_DEMO_DATA=false \
+  -v mohtawa-data:/app/data \
+  mohtawa
+```
+
+الصورة تعمل بمستخدم غير جذري وتتضمن `HEALTHCHECK`. **اربط وحدة تخزين دائمة على `/app/data`** — البيانات كلها هناك.
+
+**أي مضيف Node**: `npm ci --omit=dev && NODE_ENV=production npm start` خلف عاكس (nginx/Caddy) مع `TRUST_PROXY=1`.
+
+---
+
+## قبل الإطلاق التجاري — ما تبقّى
+
+هذه النسخة مكتملة وظيفيًا وجاهزة للتشغيل، ويبقى قبل تحصيل المال:
+
+1. **بوابة الدفع** — `/api/billing/subscription` يغيّر الباقة والحصص فورًا بلا تحصيل. اربط Stripe/Moyasar/Tap عند نقطة واحدة في `src/routes/billing.routes.js`.
+2. **قاعدة بيانات مُدارة** — مخزن JSON ممتاز لخادم واحد بقرص دائم. لتشغيل عدة نسخ، استبدل `src/db/store.js` (الواجهة قريبة من MongoDB/Postgres، وبقية الكود لا يتغير).
+3. **الخط** — الواجهة تحمّل خط Cairo من Google Fonts مع بدائل نظامية. لاستقلال كامل عن طرف ثالث، نزّل الخط إلى `public/fonts` واستبدل رابط `<link>` بـ`@font-face`.
+4. **البريد** — لا يوجد تحقق بريد أو استعادة كلمة مرور بعد؛ أضف مزوّد بريد إن احتجتهما.
+5. **النطاق** — بدّل `https://mohtawa.app` في `index.html` و`robots.txt` و`sitemap.xml` بنطاقك.
+
+---
+
+## الترخيص
 
 MIT
