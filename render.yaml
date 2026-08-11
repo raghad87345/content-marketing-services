@@ -1,0 +1,29 @@
+# نشر بضغطة واحدة على Render — https://render.com
+# 1) ارفع المستودع على GitHub  2) New + → Blueprint → اختر المستودع
+services:
+  - type: web
+    name: mohtawa
+    runtime: node
+    plan: starter          # غيّرها إلى free للتجربة (بدون قرص دائم — البيانات تُمسح عند كل إعادة تشغيل)
+    region: frankfurt      # أقرب منطقة للسوق العربي
+    buildCommand: npm ci --omit=dev
+    startCommand: node src/index.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: TRUST_PROXY
+        value: "1"
+      - key: DATA_DIR
+        value: /var/data
+      - key: SEED_DEMO_DATA
+        value: "true"      # اجعلها false عند إطلاق تجاري حقيقي
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false        # اختياري: أضِف المفتاح من لوحة Render لتشغيل Claude
+    disk:                  # القرص الدائم متاح على الباقات المدفوعة فقط
+      name: mohtawa-data
+      mountPath: /var/data
+      sizeGB: 1
