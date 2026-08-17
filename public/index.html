@@ -307,78 +307,169 @@
 
     .work-tag:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* PORTFOLIO CARDS */
-    .folder[data-idx="2"].open .folder-body { max-height: 520px; overflow-y: auto; }
+    /* ── WORKS FOLDER REDESIGN ── */
+    .folder[data-idx="2"].open .folder-body { max-height: 440px; overflow-y: auto; }
     .folder[data-idx="2"].open .folder-body::-webkit-scrollbar { width: 3px; }
-    .folder[data-idx="2"].open .folder-body::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 2px; }
+    .folder[data-idx="2"].open .folder-body::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.25); border-radius: 2px; }
 
-    .pf-meta { margin-bottom: 14px; }
+    .works-stats {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+    }
 
-    .pf-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    .works-stat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .works-stat:not(:first-child) {
+      border-right: 1px solid rgba(255,255,255,0.06);
+      padding-right: 16px;
+    }
+
+    .works-stat-num {
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .works-stat-lbl {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.32);
+      margin-top: 4px;
+    }
+
+    .works-stat-delta {
+      font-size: 0.54rem;
+      font-weight: 800;
+      color: rgba(201,168,76,0.6);
+      letter-spacing: 0.4px;
+      margin-top: 2px;
+    }
+
+    .works-reel {
+      display: flex;
       gap: 8px;
+      overflow-x: auto;
+      margin-left: -48px;
+      margin-right: -48px;
+      padding: 2px 48px 10px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       margin-bottom: 18px;
     }
 
-    .pf-card {
-      position: relative;
-      border-radius: 6px;
+    .works-reel::-webkit-scrollbar { display: none; }
+
+    .works-case {
+      flex: 0 0 110px;
+      height: 160px;
+      border-radius: 8px;
+      border: 1px solid rgba(201,168,76,0.07);
       overflow: hidden;
-      height: 96px;
-      border: 1px solid rgba(201,168,76,0.08);
+      position: relative;
       cursor: pointer;
-      transition: border-color 0.25s, transform 0.25s;
+      transition: border-color 0.3s, transform 0.3s;
     }
 
-    .pf-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
-
-    .pf-bg {
-      width: 100%; height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
+    .works-case:hover {
+      border-color: rgba(201,168,76,0.42);
+      transform: translateY(-3px);
     }
 
-    .pf-card:nth-child(1) .pf-bg { background: linear-gradient(135deg, #1a1200, #2a1f00); }
-    .pf-card:nth-child(2) .pf-bg { background: linear-gradient(135deg, #0d1a00, #182800); }
-    .pf-card:nth-child(3) .pf-bg { background: linear-gradient(135deg, #1a0d00, #2a1200); }
-    .pf-card:nth-child(4) .pf-bg { background: linear-gradient(135deg, #00101a, #001825); }
-    .pf-card:nth-child(5) .pf-bg { background: linear-gradient(135deg, #1a001a, #250025); }
-    .pf-card:nth-child(6) .pf-bg { background: linear-gradient(135deg, #0a1818, #001a1a); }
+    .works-case-bg { width: 100%; height: 100%; }
 
-    .pf-overlay {
+    .works-case:nth-child(1) .works-case-bg { background: linear-gradient(148deg, #1a0f00, #2a1900, #1f1200); }
+    .works-case:nth-child(2) .works-case-bg { background: linear-gradient(148deg, #000d1a, #001928, #000e1c); }
+    .works-case:nth-child(3) .works-case-bg { background: linear-gradient(148deg, #15001a, #200024, #180020); }
+    .works-case:nth-child(4) .works-case-bg { background: linear-gradient(148deg, #001a0d, #002616, #001e10); }
+    .works-case:nth-child(5) .works-case-bg { background: linear-gradient(148deg, #1a0000, #280000, #200000); }
+    .works-case:nth-child(6) .works-case-bg { background: linear-gradient(148deg, #0a0a18, #10102a, #0c0c20); }
+
+    .works-case-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(10,10,10,0.94) 0%, rgba(10,10,10,0.2) 55%, transparent 100%);
+      background: linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.18) 50%, transparent 100%);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       padding: 8px 10px;
-      opacity: 0;
-      transition: opacity 0.25s;
     }
 
-    .pf-card:hover .pf-overlay { opacity: 1; }
+    .works-case-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -58%);
+      font-size: 2.1rem;
+      opacity: 0.3;
+      transition: opacity 0.28s;
+    }
 
-    .pf-cat {
-      font-size: 0.52rem;
-      font-weight: 700;
+    .works-case:hover .works-case-icon { opacity: 0.12; }
+
+    .works-case-sector {
+      font-size: 0.48rem;
+      font-weight: 800;
       color: var(--gold);
-      letter-spacing: 1.5px;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
       display: block;
       margin-bottom: 3px;
     }
 
-    .pf-name {
-      font-size: 0.7rem;
+    .works-case-name {
+      font-size: 0.63rem;
       font-weight: 700;
       color: var(--white);
+      line-height: 1.35;
       display: block;
-      line-height: 1.3;
     }
+
+    .works-reel-wrap {
+      position: relative;
+    }
+
+    .works-reel-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 10px;
+      left: 0;
+      width: 32px;
+      background: linear-gradient(to right, var(--folder-bg), transparent);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .works-pdf {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .works-pdf:hover { color: var(--gold-light); border-color: var(--gold-light); }
 
     @media (max-width: 700px) {
       .hero-center { width: 82%; }
@@ -391,6 +482,9 @@
       .folder[data-idx="1"] .folder-header { padding-left: 12%; }
       .folder[data-idx="2"] .folder-header { padding-left: 26%; }
       .folder[data-idx="3"] .folder-header { padding-left: 42%; }
+      .works-reel { margin-left: -22px; margin-right: -22px; padding-left: 22px; padding-right: 22px; }
+      .works-stats { flex-wrap: wrap; gap: 12px 0; }
+      .works-stat { min-width: 40%; }
     }
   </style>
 </head>
@@ -470,56 +564,85 @@
         </div>
         <div class="folder-body">
           <div class="folder-body-inner">
-            <div class="folder-meta pf-meta">
-              <span>+150 عميل</span><span class="sep">·</span>
-              <span>+500 منشور</span><span class="sep">·</span>
-              <span class="status-dot"></span><span>قطاعات متنوعة</span>
-            </div>
-            <div class="pf-grid">
-              <div class="pf-card">
-                <div class="pf-bg">🛍️</div>
-                <div class="pf-overlay">
-                  <span class="pf-cat">سوشيال ميديا</span>
-                  <span class="pf-name">علامة موضة سعودية</span>
-                </div>
+
+            <div class="works-stats">
+              <div class="works-stat">
+                <span class="works-stat-num" id="wc-views">1.1M</span>
+                <span class="works-stat-lbl">مشاهدة</span>
+                <span class="works-stat-delta">+4305%</span>
               </div>
-              <div class="pf-card">
-                <div class="pf-bg">🏨</div>
-                <div class="pf-overlay">
-                  <span class="pf-cat">استراتيجية محتوى</span>
-                  <span class="pf-name">فندق فاخر — الرياض</span>
-                </div>
+              <div class="works-stat">
+                <span class="works-stat-num" id="wc-likes">101K</span>
+                <span class="works-stat-lbl">إعجاب</span>
+                <span class="works-stat-delta">+4576%</span>
               </div>
-              <div class="pf-card">
-                <div class="pf-bg">💄</div>
-                <div class="pf-overlay">
-                  <span class="pf-cat">هوية بصرية</span>
-                  <span class="pf-name">ماركة تجميل نسائية</span>
-                </div>
+              <div class="works-stat">
+                <span class="works-stat-num" id="wc-shares">15K</span>
+                <span class="works-stat-lbl">مشاركة</span>
+                <span class="works-stat-delta">+5235%</span>
               </div>
-              <div class="pf-card">
-                <div class="pf-bg">🏋️</div>
-                <div class="pf-overlay">
-                  <span class="pf-cat">محتوى مكتوب</span>
-                  <span class="pf-name">أكاديمية لياقة بدنية</span>
-                </div>
-              </div>
-              <div class="pf-card">
-                <div class="pf-bg">🍽️</div>
-                <div class="pf-overlay">
-                  <span class="pf-cat">سوشيال ميديا</span>
-                  <span class="pf-name">مطعم تجربة راقية</span>
-                </div>
-              </div>
-              <div class="pf-card">
-                <div class="pf-bg">📚</div>
-                <div class="pf-overlay">
-                  <span class="pf-cat">استراتيجية محتوى</span>
-                  <span class="pf-name">منصة تعليمية رقمية</span>
-                </div>
+              <div class="works-stat">
+                <span class="works-stat-num" id="wc-comments">978</span>
+                <span class="works-stat-lbl">تعليق</span>
+                <span class="works-stat-delta">+1221%</span>
               </div>
             </div>
-            <a href="mailto:raghadzahran66@gmail.com" class="folder-cta">تواصل لمشاركة أعمال إضافية ←</a>
+
+            <div class="works-reel-wrap">
+              <div class="works-reel">
+                <div class="works-case">
+                  <div class="works-case-bg"></div>
+                  <span class="works-case-icon">🛍️</span>
+                  <div class="works-case-overlay">
+                    <span class="works-case-sector">سوشيال ميديا</span>
+                    <span class="works-case-name">علامة موضة سعودية</span>
+                  </div>
+                </div>
+                <div class="works-case">
+                  <div class="works-case-bg"></div>
+                  <span class="works-case-icon">🏨</span>
+                  <div class="works-case-overlay">
+                    <span class="works-case-sector">استراتيجية محتوى</span>
+                    <span class="works-case-name">فندق فاخر — الرياض</span>
+                  </div>
+                </div>
+                <div class="works-case">
+                  <div class="works-case-bg"></div>
+                  <span class="works-case-icon">💄</span>
+                  <div class="works-case-overlay">
+                    <span class="works-case-sector">هوية بصرية</span>
+                    <span class="works-case-name">ماركة تجميل نسائية</span>
+                  </div>
+                </div>
+                <div class="works-case">
+                  <div class="works-case-bg"></div>
+                  <span class="works-case-icon">🏋️</span>
+                  <div class="works-case-overlay">
+                    <span class="works-case-sector">محتوى مكتوب</span>
+                    <span class="works-case-name">أكاديمية لياقة بدنية</span>
+                  </div>
+                </div>
+                <div class="works-case">
+                  <div class="works-case-bg"></div>
+                  <span class="works-case-icon">🍽️</span>
+                  <div class="works-case-overlay">
+                    <span class="works-case-sector">سوشيال ميديا</span>
+                    <span class="works-case-name">مطعم تجربة راقية</span>
+                  </div>
+                </div>
+                <div class="works-case">
+                  <div class="works-case-bg"></div>
+                  <span class="works-case-icon">📚</span>
+                  <div class="works-case-overlay">
+                    <span class="works-case-sector">استراتيجية محتوى</span>
+                    <span class="works-case-name">منصة تعليمية رقمية</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <a href="RaghadContentPortfolio.pdf" target="_blank" rel="noopener" class="works-pdf">تحميل ملف الأعمال الكامل ←</a>
+
           </div>
         </div>
       </div>
@@ -594,6 +717,46 @@
         }
       });
     });
+
+    var worksCountersDone = false;
+
+    function runWorksCounters() {
+      if (worksCountersDone) return;
+      worksCountersDone = true;
+
+      var counters = [
+        { id: 'wc-views',    end: 1.1,  suffix: 'M', decimals: 1 },
+        { id: 'wc-likes',   end: 101,  suffix: 'K', decimals: 0 },
+        { id: 'wc-shares',  end: 15,   suffix: 'K', decimals: 0 },
+        { id: 'wc-comments',end: 978,  suffix: '',  decimals: 0 }
+      ];
+
+      counters.forEach(function(c) {
+        var el = document.getElementById(c.id);
+        if (!el) return;
+        var dur = 1100, started = null;
+        function step(ts) {
+          if (!started) started = ts;
+          var p = Math.min((ts - started) / dur, 1);
+          var ease = 1 - Math.pow(1 - p, 3);
+          var v = c.end * ease;
+          el.textContent = (c.decimals ? v.toFixed(c.decimals) : Math.round(v)) + c.suffix;
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    var worksFolder = document.querySelector('.folder[data-idx="2"]');
+    if (worksFolder && 'MutationObserver' in window) {
+      new MutationObserver(function(muts) {
+        muts.forEach(function(m) {
+          if (m.attributeName === 'class' && worksFolder.classList.contains('open')) {
+            setTimeout(runWorksCounters, 180);
+          }
+        });
+      }).observe(worksFolder, { attributes: true });
+    }
   </script>
 
 </body>
