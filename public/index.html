@@ -307,6 +307,79 @@
 
     .work-tag:hover { border-color: var(--gold); color: var(--gold); }
 
+    /* PORTFOLIO CARDS */
+    .folder[data-idx="2"].open .folder-body { max-height: 520px; overflow-y: auto; }
+    .folder[data-idx="2"].open .folder-body::-webkit-scrollbar { width: 3px; }
+    .folder[data-idx="2"].open .folder-body::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 2px; }
+
+    .pf-meta { margin-bottom: 14px; }
+
+    .pf-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .pf-card {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      height: 96px;
+      border: 1px solid rgba(201,168,76,0.08);
+      cursor: pointer;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .pf-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); }
+
+    .pf-bg {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+    }
+
+    .pf-card:nth-child(1) .pf-bg { background: linear-gradient(135deg, #1a1200, #2a1f00); }
+    .pf-card:nth-child(2) .pf-bg { background: linear-gradient(135deg, #0d1a00, #182800); }
+    .pf-card:nth-child(3) .pf-bg { background: linear-gradient(135deg, #1a0d00, #2a1200); }
+    .pf-card:nth-child(4) .pf-bg { background: linear-gradient(135deg, #00101a, #001825); }
+    .pf-card:nth-child(5) .pf-bg { background: linear-gradient(135deg, #1a001a, #250025); }
+    .pf-card:nth-child(6) .pf-bg { background: linear-gradient(135deg, #0a1818, #001a1a); }
+
+    .pf-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.94) 0%, rgba(10,10,10,0.2) 55%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8px 10px;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .pf-card:hover .pf-overlay { opacity: 1; }
+
+    .pf-cat {
+      font-size: 0.52rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .pf-name {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--white);
+      display: block;
+      line-height: 1.3;
+    }
+
     @media (max-width: 700px) {
       .hero-center { width: 82%; }
       .stack-outer { padding: 0 14px; }
@@ -397,22 +470,56 @@
         </div>
         <div class="folder-body">
           <div class="folder-body-inner">
-            <h2 class="folder-big-title">أعمالنا</h2>
-            <div class="folder-meta">
+            <div class="folder-meta pf-meta">
               <span>+150 عميل</span><span class="sep">·</span>
               <span>+500 منشور</span><span class="sep">·</span>
               <span class="status-dot"></span><span>قطاعات متنوعة</span>
             </div>
-            <div class="work-tags">
-              <span class="work-tag">🛍 موضة وأزياء</span>
-              <span class="work-tag">🏨 ضيافة فاخرة</span>
-              <span class="work-tag">💄 تجميل</span>
-              <span class="work-tag">🍽 مطاعم</span>
-              <span class="work-tag">📚 تعليم</span>
-              <span class="work-tag">🏋️ لياقة</span>
-              <span class="work-tag">💻 تقنية</span>
+            <div class="pf-grid">
+              <div class="pf-card">
+                <div class="pf-bg">🛍️</div>
+                <div class="pf-overlay">
+                  <span class="pf-cat">سوشيال ميديا</span>
+                  <span class="pf-name">علامة موضة سعودية</span>
+                </div>
+              </div>
+              <div class="pf-card">
+                <div class="pf-bg">🏨</div>
+                <div class="pf-overlay">
+                  <span class="pf-cat">استراتيجية محتوى</span>
+                  <span class="pf-name">فندق فاخر — الرياض</span>
+                </div>
+              </div>
+              <div class="pf-card">
+                <div class="pf-bg">💄</div>
+                <div class="pf-overlay">
+                  <span class="pf-cat">هوية بصرية</span>
+                  <span class="pf-name">ماركة تجميل نسائية</span>
+                </div>
+              </div>
+              <div class="pf-card">
+                <div class="pf-bg">🏋️</div>
+                <div class="pf-overlay">
+                  <span class="pf-cat">محتوى مكتوب</span>
+                  <span class="pf-name">أكاديمية لياقة بدنية</span>
+                </div>
+              </div>
+              <div class="pf-card">
+                <div class="pf-bg">🍽️</div>
+                <div class="pf-overlay">
+                  <span class="pf-cat">سوشيال ميديا</span>
+                  <span class="pf-name">مطعم تجربة راقية</span>
+                </div>
+              </div>
+              <div class="pf-card">
+                <div class="pf-bg">📚</div>
+                <div class="pf-overlay">
+                  <span class="pf-cat">استراتيجية محتوى</span>
+                  <span class="pf-name">منصة تعليمية رقمية</span>
+                </div>
+              </div>
             </div>
-            <a href="mailto:raghadzahran66@gmail.com" class="folder-cta">استعرض كل الأعمال ←</a>
+            <a href="mailto:raghadzahran66@gmail.com" class="folder-cta">تواصل لمشاركة أعمال إضافية ←</a>
           </div>
         </div>
       </div>
