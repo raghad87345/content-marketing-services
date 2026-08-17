@@ -32,7 +32,6 @@
       font-family: var(--font);
     }
 
-    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -97,7 +96,6 @@
       50% { opacity: 0.3; }
     }
 
-    /* HERO */
     .hero-center {
       position: fixed;
       top: 44%;
@@ -118,7 +116,6 @@
       font-style: italic;
     }
 
-    /* STACK */
     .stack-outer {
       position: fixed;
       bottom: 0;
@@ -135,7 +132,6 @@
       position: relative;
     }
 
-    /* CONTACT BUTTON */
     .contact-btn {
       position: absolute;
       top: 0;
@@ -157,7 +153,6 @@
 
     .contact-btn:hover { background: var(--gold-light); }
 
-    /* FOLDER */
     .folder {
       width: 100%;
       background: var(--folder-bg);
@@ -170,7 +165,6 @@
 
     .folder:first-of-type { margin-top: 0; }
 
-    /* HEADER */
     .folder-header {
       height: 46px;
       display: flex;
@@ -198,14 +192,12 @@
 
     .folder:not(.open) .folder-header:hover .folder-tab { color: rgba(255,255,255,0.88); }
 
-    /* TAB CASCADE POSITIONS */
     .folder[data-idx="0"] .folder-header { direction: ltr; justify-content: flex-end; }
     .folder[data-idx="1"] .folder-header { direction: ltr; justify-content: flex-end; padding-left: 22%; }
     .folder[data-idx="2"] .folder-header { direction: ltr; justify-content: flex-end; padding-left: 40%; }
     .folder[data-idx="3"] .folder-header { direction: ltr; justify-content: flex-end; padding-left: 57%; }
     .folder[data-idx="4"] .folder-header { direction: ltr; justify-content: flex-start; }
 
-    /* BODY */
     .folder-body {
       max-height: 0;
       overflow: hidden;
@@ -220,7 +212,6 @@
       direction: rtl;
     }
 
-    /* BIG TITLE */
     .folder-big-title {
       font-family: var(--serif);
       font-size: clamp(2.8rem, 6.5vw, 5.2rem);
@@ -231,7 +222,6 @@
       margin-bottom: 16px;
     }
 
-    /* META */
     .folder-meta {
       display: flex;
       align-items: center;
@@ -253,7 +243,6 @@
       flex-shrink: 0;
     }
 
-    /* CTA */
     .folder-cta {
       display: inline-flex;
       align-items: center;
@@ -271,7 +260,6 @@
 
     .folder-cta:hover { color: var(--gold-light); border-color: var(--gold-light); }
 
-    /* GRIDS */
     .content-grid {
       display: grid;
       grid-template-columns: repeat(3,1fr);
@@ -295,7 +283,6 @@
     .grid-title { font-size: 0.78rem; font-weight: 700; color: var(--white); margin-bottom: 3px; }
     .grid-desc { font-size: 0.7rem; color: var(--gray-light); line-height: 1.5; }
 
-    /* ABOUT */
     .about-text {
       font-size: 0.88rem;
       color: var(--gray-light);
@@ -304,7 +291,6 @@
       max-width: 560px;
     }
 
-    /* WORK TAGS */
     .work-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
 
     .work-tag {
@@ -321,7 +307,6 @@
 
     .work-tag:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* RESPONSIVE */
     @media (max-width: 700px) {
       .hero-center { width: 82%; }
       .stack-outer { padding: 0 14px; }
@@ -338,7 +323,6 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <span class="logo">Raghadcontent</span>
     <div class="nav-right">
@@ -353,18 +337,15 @@
     </div>
   </nav>
 
-  <!-- HERO CENTER -->
   <div class="hero-center">
     <p>صانعة محتوى تحوّل أفكارك إلى هوية رقمية تجذب جمهورك وتبني علامتك التجارية.</p>
   </div>
 
-  <!-- FOLDER STACK -->
   <div class="stack-outer">
     <div class="stack">
 
       <a href="mailto:raghadzahran66@gmail.com" class="contact-btn">تواصل معي</a>
 
-      <!-- 0: إدارة السوشيال ميديا -->
       <div class="folder" data-idx="0">
         <div class="folder-header">
           <span class="folder-tab">إدارة السوشيال ميديا</span>
@@ -378,28 +359,15 @@
               <span class="status-dot"></span><span>خطط مخصصة</span>
             </div>
             <div class="content-grid">
-              <div class="grid-item">
-                <span class="grid-num">01</span>
-                <div class="grid-title">استراتيجية المحتوى</div>
-                <div class="grid-desc">خطة شهرية متكاملة</div>
-              </div>
-              <div class="grid-item">
-                <span class="grid-num">02</span>
-                <div class="grid-title">تصميم البوستات</div>
-                <div class="grid-desc">هوية بصرية موحدة</div>
-              </div>
-              <div class="grid-item">
-                <span class="grid-num">03</span>
-                <div class="grid-title">تحليل الأداء</div>
-                <div class="grid-desc">تقارير شهرية مفصلة</div>
-              </div>
+              <div class="grid-item"><span class="grid-num">01</span><div class="grid-title">استراتيجية المحتوى</div><div class="grid-desc">خطة شهرية متكاملة</div></div>
+              <div class="grid-item"><span class="grid-num">02</span><div class="grid-title">تصميم البوستات</div><div class="grid-desc">هوية بصرية موحدة</div></div>
+              <div class="grid-item"><span class="grid-num">03</span><div class="grid-title">تحليل الأداء</div><div class="grid-desc">تقارير شهرية مفصلة</div></div>
             </div>
             <a href="mailto:raghadzahran66@gmail.com" class="folder-cta">احصل على خدمة الإدارة ←</a>
           </div>
         </div>
       </div>
 
-      <!-- 1: إنشاء المحتوى -->
       <div class="folder" data-idx="1">
         <div class="folder-header">
           <span class="folder-tab">إنشاء المحتوى</span>
@@ -413,33 +381,16 @@
               <span class="status-dot"></span><span>كوبي رايتينج</span>
             </div>
             <div class="content-grid content-grid-2">
-              <div class="grid-item">
-                <span class="grid-num">01</span>
-                <div class="grid-title">كتابة إبداعية</div>
-                <div class="grid-desc">مقالات ومنشورات تجذب جمهورك</div>
-              </div>
-              <div class="grid-item">
-                <span class="grid-num">02</span>
-                <div class="grid-title">سكريبتات فيديو</div>
-                <div class="grid-desc">نصوص ريلز ويوتيوب احترافية</div>
-              </div>
-              <div class="grid-item">
-                <span class="grid-num">03</span>
-                <div class="grid-title">كوبي رايتينج</div>
-                <div class="grid-desc">إعلانات تحويلية عالية الأداء</div>
-              </div>
-              <div class="grid-item">
-                <span class="grid-num">04</span>
-                <div class="grid-title">محتوى SEO</div>
-                <div class="grid-desc">محسّن لمحركات البحث</div>
-              </div>
+              <div class="grid-item"><span class="grid-num">01</span><div class="grid-title">كتابة إبداعية</div><div class="grid-desc">مقالات ومنشورات تجذب جمهورك</div></div>
+              <div class="grid-item"><span class="grid-num">02</span><div class="grid-title">سكريبتات فيديو</div><div class="grid-desc">نصوص ريلز ويوتيوب احترافية</div></div>
+              <div class="grid-item"><span class="grid-num">03</span><div class="grid-title">كوبي رايتينج</div><div class="grid-desc">إعلانات تحويلية عالية الأداء</div></div>
+              <div class="grid-item"><span class="grid-num">04</span><div class="grid-title">محتوى SEO</div><div class="grid-desc">محسّن لمحركات البحث</div></div>
             </div>
             <a href="mailto:raghadzahran66@gmail.com" class="folder-cta">اطلب محتواك الآن ←</a>
           </div>
         </div>
       </div>
 
-      <!-- 2: الأعمال -->
       <div class="folder" data-idx="2">
         <div class="folder-header">
           <span class="folder-tab">الأعمال</span>
@@ -466,7 +417,6 @@
         </div>
       </div>
 
-      <!-- 3: من أنا -->
       <div class="folder" data-idx="3">
         <div class="folder-header">
           <span class="folder-tab">من أنا</span>
@@ -485,7 +435,6 @@
         </div>
       </div>
 
-      <!-- 4: BASE -->
       <div class="folder open" data-idx="4">
         <div class="folder-header" style="cursor:default;">
           <span class="folder-tab" style="color:rgba(255,255,255,0.3);">Raghadcontent · ©2026</span>
