@@ -161,4 +161,4 @@ async function generateWithAI(input) {
   };
 }
 
-module.exports = { generateWithAI, PACKAGE_SCHEMA, buildUserPrompt };
+module.exports = { generateWithAI, getClient, PACKAGE_SCHEMA, buildUserPrompt };

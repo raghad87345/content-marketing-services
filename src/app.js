@@ -21,6 +21,8 @@ const calendarRoutes = require('./routes/calendar.routes');
 const videoRoutes = require('./routes/video.routes');
 const analyticsRoutes = require('./routes/analytics.routes');
 const billingRoutes = require('./routes/billing.routes');
+const laqtahRoutes = require('./routes/laqtah.routes');
+const { laqtahPage } = require('./lib/laqtah-page');
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 
@@ -30,27 +32,61 @@ function createApp() {
   if (config.trustProxy) app.set('trust proxy', config.trustProxy);
   app.disable('x-powered-by');
 
-  app.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'"],
-          // Inline styles are used for chart bars and progress widths.
-          styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-          fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
-          imgSrc: ["'self'", 'data:', 'blob:'],
-          mediaSrc: ["'self'", 'blob:'],
-          connectSrc: ["'self'"],
-          objectSrc: ["'none'"],
-          frameAncestors: ["'self'"],
-          baseUri: ["'self'"],
-          formAction: ["'self'"],
-        },
+  const siteHelmet = helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        // Inline styles are used for chart bars and progress widths.
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+        imgSrc: ["'self'", 'data:', 'blob:'],
+        mediaSrc: ["'self'", 'blob:'],
+        connectSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        frameAncestors: ["'self'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
       },
-      crossOriginEmbedderPolicy: false,
-      referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
-    })
+    },
+    crossOriginEmbedderPolicy: false,
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  });
+  // The Laqtah app runs on the Claude Design DC runtime, which compiles its
+  // template logic with `new Function`, transcribes audio in-browser with
+  // transformers.js (jsDelivr + WASM workers), and talks to Google Drive and
+  // Higgsfield's signed URLs. It gets its own, wider policy; the rest of the site
+  // keeps the strict one above.
+  const laqtahHelmet = helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-eval'",
+          "'wasm-unsafe-eval'",
+          'https://cdn.jsdelivr.net',
+          'https://accounts.google.com',
+          'https://apis.google.com',
+        ],
+        workerSrc: ["'self'", 'blob:'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://accounts.google.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com', 'data:'],
+        imgSrc: ["'self'", 'data:', 'blob:', 'https:'],
+        mediaSrc: ["'self'", 'blob:', 'https:'],
+        connectSrc: ["'self'", 'blob:', 'data:', 'https:'],
+        frameSrc: ['https://accounts.google.com', 'https://docs.google.com'],
+        objectSrc: ["'none'"],
+        frameAncestors: ["'self'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+    referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  });
+  app.use((req, res, next) =>
+    (req.path === '/laqtah' || req.path.startsWith('/laqtah/') ? laqtahHelmet : siteHelmet)(req, res, next)
   );
   app.use(compression());
   app.use(cors({ origin: config.corsOrigin === '*' ? true : config.corsOrigin.split(',') }));
@@ -99,6 +135,15 @@ function createApp() {
   app.use('/api/video', videoRoutes);
   app.use('/api/analytics', analyticsRoutes);
   app.use('/api/billing', billingRoutes);
+  app.use('/api/laqtah', laqtahRoutes);
+
+  // Relative asset paths in the Laqtah page need the trailing slash.
+  // Express routing is non-strict, so '/laqtah' also matches '/laqtah/': check req.path.
+  app.get(['/laqtah', '/laqtah/index.html'], (req, res) => {
+    if (req.path === '/laqtah') return res.redirect(301, '/laqtah/');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.type('html').send(laqtahPage());
+  });
 
   app.use(
     express.static(PUBLIC_DIR, {

@@ -102,6 +102,28 @@ tests/api.test.js      20 اختبارًا (تكامل + وحدة)
 
 ---
 
+## لقطة · Laqtah — تطبيق الجوال (`/laqtah`)
+
+تطبيق جوال تفاعلي (مستورد من Claude Design) يحوّل فيديو طويلًا أو فكرة إلى محتوى جاهز:
+ريلز من البودكاست مع تفريغ Whisper داخل المتصفح، فيديو وصور عبر Higgsfield، وموشن جرافيك بهوية العلامة.
+افتحه على `http://localhost:3000/laqtah/`.
+
+| الملف | الدور |
+|---|---|
+| `public/laqtah/index.html` | ملف التصميم `Laqtah App.dc.html` كما هو، مع React محلي ومسار `ios-frame.js` المترجم مسبقًا |
+| `public/laqtah/support.js` | محرك DC الذي يشغّل القالب والمنطق (مولَّد من Claude Design — لا تعدّله يدويًا) |
+| `public/laqtah/laqtah-bridge.js` | يوفّر `window.claude.complete` عبر `/api/laqtah/complete` عند توفر `ANTHROPIC_API_KEY` |
+| `src/routes/laqtah.routes.js` | `/api/laqtah/hf/*` (بديل مدمج لبروكسي Higgsfield) و`/api/laqtah/complete` |
+| `src/lib/laqtah-page.js` | يملأ إعدادات الربط (`apiBase`، Google Drive، استيراد YouTube) من متغيرات البيئة |
+| `deploy/laqtah/` | البروكسي الأصلي كـCloudflare Worker، وخادم استيراد YouTube (يحتاج `yt-dlp`) |
+
+- **التوليد:** ضع `HF_API_KEY_ID` و`HF_API_KEY_SECRET`؛ المفاتيح لا تصل للمتصفح أبدًا، والنماذج مقيّدة بقائمة سماح.
+- **اختيار المقاطع والترجمة:** تعمل عبر Claude عند وجود `ANTHROPIC_API_KEY` (بحد 12 طلبًا في الدقيقة لكل IP).
+- **سياسة CSP:** الصفحة تحتاج `unsafe-eval` (محرك DC) وjsDelivr (transformers.js وmp4box)، لذا لها سياسة خاصة بها؛ بقية الموقع على السياسة الصارمة.
+- **تحديث `ios-frame.js`:** بعد تعديل `deploy/laqtah/ios-frame.jsx` أعد ترجمته بـ`@babel/standalone` (presets: react, typescript).
+
+---
+
 ## الباقات والحصص
 
 | الباقة | السعر | براندات | توليد/شهر | تحليل فيديو/شهر |

@@ -39,4 +39,22 @@ module.exports = {
   upload: {
     maxVideoBytes: Number(process.env.MAX_VIDEO_BYTES || 200 * 1024 * 1024),
   },
+  laqtah: {
+    // Higgsfield keys stay on the server; the /laqtah app only sees /api/laqtah/hf/*.
+    hfKeyId: process.env.HF_API_KEY_ID || '',
+    hfKeySecret: process.env.HF_API_KEY_SECRET || '',
+    // Extra model paths from console.higgsfield.ai, comma-separated.
+    extraModels: (process.env.HF_EXTRA_MODELS || '')
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean),
+    // Optional: URL of deploy/laqtah/youtube-import.mjs (needs yt-dlp, so it runs separately).
+    youtubeImportUrl: process.env.LAQTAH_YOUTUBE_IMPORT_URL || '',
+    googleClientId: process.env.LAQTAH_GOOGLE_CLIENT_ID || '',
+    googleApiKey: process.env.LAQTAH_GOOGLE_API_KEY || '',
+    googleAppId: process.env.LAQTAH_GOOGLE_APP_ID || '',
+    get hfEnabled() {
+      return Boolean(this.hfKeyId && this.hfKeySecret);
+    },
+  },
 };
