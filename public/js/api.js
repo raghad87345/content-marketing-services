@@ -1,57 +1,78 @@
-const API_BASE = '/api';
+/* Thin API client: token storage, JSON handling, and typed errors. */
+(function (global) {
+  'use strict';
 
-const api = {
-  token: localStorage.getItem('cms_token'),
+  var TOKEN_KEY = 'mohtawa_token';
 
-  setToken(token) {
-    this.token = token;
-    if (token) localStorage.setItem('cms_token', token);
-    else localStorage.removeItem('cms_token');
-  },
+  function ApiRequestError(message, status, code, details) {
+    var error = new Error(message);
+    error.name = 'ApiRequestError';
+    error.status = status;
+    error.code = code;
+    error.details = details;
+    return error;
+  }
 
-  async request(method, path, body) {
-    const opts = {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-    };
-    if (this.token) opts.headers['Authorization'] = `Bearer ${this.token}`;
-    if (body) opts.body = JSON.stringify(body);
+  var api = {
+    token: localStorage.getItem(TOKEN_KEY),
 
-    const res = await fetch(API_BASE + path, opts);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Request failed');
-    return data;
-  },
+    setToken: function (token) {
+      this.token = token;
+      if (token) localStorage.setItem(TOKEN_KEY, token);
+      else localStorage.removeItem(TOKEN_KEY);
+    },
 
-  get: (path) => api.request('GET', path),
-  post: (path, body) => api.request('POST', path, body),
-  put: (path, body) => api.request('PUT', path, body),
-  delete: (path) => api.request('DELETE', path),
+    request: function (method, path, body) {
+      var headers = { Accept: 'application/json' };
+      if (body !== undefined) headers['Content-Type'] = 'application/json';
+      if (this.token) headers.Authorization = 'Bearer ' + this.token;
 
-  // Auth
-  login: (email, password) => api.post('/auth/login', { email, password }),
-  register: (name, email, password) => api.post('/auth/register', { name, email, password }),
-  me: () => api.get('/auth/me'),
+      return fetch('/api' + path, {
+        method: method,
+        headers: headers,
+        body: body === undefined ? undefined : JSON.stringify(body),
+      }).then(function (res) {
+        var isJson = (res.headers.get('content-type') || '').indexOf('application/json') !== -1;
+        return (isJson ? res.json() : res.text()).then(function (payload) {
+          if (res.ok) return payload;
+          var info = (payload && payload.error) || {};
+          throw ApiRequestError(
+            info.message || 'تعذّر إتمام الطلب. حاول مرة أخرى.',
+            res.status,
+            info.code,
+            info.details
+          );
+        });
+      });
+    },
 
-  // Content
-  getContents: (params = {}) => {
-    const q = new URLSearchParams(params).toString();
-    return api.get('/content' + (q ? '?' + q : ''));
-  },
-  createContent: (data) => api.post('/content', data),
-  updateContent: (id, data) => api.put(`/content/${id}`, data),
-  deleteContent: (id) => api.delete(`/content/${id}`),
+    get: function (path) {
+      return this.request('GET', path);
+    },
+    post: function (path, body) {
+      return this.request('POST', path, body || {});
+    },
+    patch: function (path, body) {
+      return this.request('PATCH', path, body || {});
+    },
+    put: function (path, body) {
+      return this.request('PUT', path, body || {});
+    },
+    del: function (path) {
+      return this.request('DELETE', path);
+    },
 
-  // Campaigns
-  getCampaigns: (params = {}) => {
-    const q = new URLSearchParams(params).toString();
-    return api.get('/campaigns' + (q ? '?' + q : ''));
-  },
-  createCampaign: (data) => api.post('/campaigns', data),
-  updateCampaign: (id, data) => api.put(`/campaigns/${id}`, data),
-  deleteCampaign: (id) => api.delete(`/campaigns/${id}`),
+    query: function (path, params) {
+      var pairs = Object.keys(params || {})
+        .filter(function (key) {
+          return params[key] !== undefined && params[key] !== null && params[key] !== '';
+        })
+        .map(function (key) {
+          return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+        });
+      return this.get(path + (pairs.length ? '?' + pairs.join('&') : ''));
+    },
+  };
 
-  // Analytics
-  getOverview: () => api.get('/analytics/overview'),
-  getTopContent: () => api.get('/analytics/top-content'),
-};
+  global.api = api;
+})(window);

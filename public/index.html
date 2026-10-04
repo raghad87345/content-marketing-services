@@ -1,350 +1,416 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Content Marketing Services</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MOHTAWA — نظام التسويق بالمحتوى لأصحاب المشاريع وصنّاع المحتوى</title>
+<meta name="description" content="MOHTAWA منصة عربية تأخذك من اكتشاف الترند إلى السكربت والتقويم وتحليل الفيديو وقياس النتائج. خطط محتواك، ولّد السكربتات، وحلّل أداءك في مكان واحد." />
+<meta name="theme-color" content="#0b0c10" />
+<link rel="canonical" href="https://mohtawa.app/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="MOHTAWA" />
+<meta property="og:locale" content="ar_SA" />
+<meta property="og:title" content="MOHTAWA — نظام التسويق بالمحتوى" />
+<meta property="og:description" content="من الترند إلى السكربت إلى التقويم إلى النتائج. منصة واحدة تدير دورة المحتوى كاملة." />
+<meta property="og:url" content="https://mohtawa.app/" />
+<meta property="og:image" content="https://mohtawa.app/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="MOHTAWA — نظام التسويق بالمحتوى" />
+<meta name="twitter:description" content="من الترند إلى السكربت إلى التقويم إلى النتائج، في منصة واحدة." />
+<meta name="twitter:image" content="https://mohtawa.app/og-image.png" />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/css/base.css" />
+<link rel="stylesheet" href="/css/landing.css" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "MOHTAWA",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "inLanguage": "ar",
+  "description": "منصة تسويق بالمحتوى تأخذ أصحاب المشاريع وصنّاع المحتوى والوكالات من اكتشاف الترند إلى السكربت والتقويم وتحليل الفيديو وقياس النتائج.",
+  "offers": [
+    { "@type": "Offer", "name": "Creator", "price": "49", "priceCurrency": "SAR" },
+    { "@type": "Offer", "name": "Business", "price": "129", "priceCurrency": "SAR" },
+    { "@type": "Offer", "name": "Agency", "price": "299", "priceCurrency": "SAR" }
+  ]
+}
+</script>
 </head>
-<body class="auth-page">
+<body class="landing">
+<a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
 
-  <!-- AUTH SCREEN -->
-  <div id="auth-screen" class="auth-container">
-    <div class="auth-box">
-      <div class="auth-logo">
-        <i class="fa-solid fa-rocket"></i>
-        <h1>ContentPro</h1>
-        <p>Content Marketing Services</p>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/" aria-label="MOHTAWA الصفحة الرئيسية">
+      <span class="brandmark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19V7l5 6 5-6 5 6v6" />
+        </svg>
+      </span>
+      <span>MOHTAWA</span>
+    </a>
+
+    <nav class="navlinks" id="navlinks" aria-label="روابط الموقع">
+      <a href="#features">المميزات</a>
+      <a href="#how">كيف تعمل؟</a>
+      <a href="#video">تحليل الفيديو</a>
+      <a href="#pricing">الأسعار</a>
+      <a href="#faq">أسئلة شائعة</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="btn btn-ghost btn-sm" href="/app#login">تسجيل الدخول</a>
+      <a class="btn btn-primary btn-sm" href="/app#register">ابدأ مجانًا</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navlinks" aria-label="القائمة">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div>
+      <span class="eyebrow">✦ نظام تشغيل التسويق بالمحتوى</span>
+      <h1 class="grad">كل التسويق بالمحتوى،<br />في مكان واحد.</h1>
+      <p class="hero-sub">
+        من اكتشاف الترند والفكرة، إلى السكربت وقائمة اللقطات والتقويم وتحليل الفيديو وقياس النتائج.
+        MOHTAWA يحفظ هوية براندك ويقترح ما يجب أن تنشره بعد ذلك — بدل أن تبدأ من صفحة بيضاء كل أسبوع.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/app#register">ابنِ خطة محتواي</a>
+        <a class="btn btn-ghost" href="/app#demo">جرّب الحساب التجريبي</a>
       </div>
+      <p class="hero-note">لا يتطلب بطاقة ائتمانية · تعمل المنصة كاملة من أول دقيقة</p>
 
-      <!-- Login Form -->
-      <form id="login-form" class="auth-form">
-        <h2>Welcome back</h2>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="login-email" placeholder="you@example.com" required />
-        </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="login-password" placeholder="••••••••" required />
-        </div>
-        <div id="login-error" class="error-msg hidden"></div>
-        <button type="submit" class="btn btn-primary btn-full">Sign In</button>
-        <p class="auth-switch">Don't have an account? <a href="#" id="go-register">Register</a></p>
-      </form>
+      <div class="proof">
+        <span><b>6</b> أدوات مترابطة</span>
+        <span><b>12</b> فورمات محتوى جاهزة</span>
+        <span><b>100%</b> عربي وRTL</span>
+      </div>
+    </div>
 
-      <!-- Register Form -->
-      <form id="register-form" class="auth-form hidden">
-        <h2>Create Account</h2>
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="reg-name" placeholder="Your name" required />
+    <div class="mock" aria-hidden="true">
+      <div class="mock-top"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+      <div class="mock-grid">
+        <div class="mock-side">
+          <div class="mini-nav active">الرئيسية</div>
+          <div class="mini-nav">Trend Radar</div>
+          <div class="mini-nav">Video Analyzer</div>
+          <div class="mini-nav">Content Studio</div>
+          <div class="mini-nav">التقويم</div>
+          <div class="mini-nav">التحليلات</div>
         </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="reg-email" placeholder="you@example.com" required />
+        <div class="mock-main">
+          <div class="mock-score">
+            <div>
+              <small style="color: var(--muted)">Video Score</small>
+              <h3 style="margin: 6px 0; font-size: 17px">أفضل من متوسط حسابك</h3>
+              <span style="color: var(--green); font-weight: 700">↑ 18%</span>
+            </div>
+            <div class="ring"><span>84</span></div>
+          </div>
+          <div class="mock-chart">
+            <svg viewBox="0 0 320 132" preserveAspectRatio="none">
+              <path class="line" d="M4 112 L48 98 L92 104 L136 74 L180 82 L224 52 L268 60 L316 22" />
+            </svg>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="reg-password" placeholder="Min 6 characters" required />
-        </div>
-        <div id="register-error" class="error-msg hidden"></div>
-        <button type="submit" class="btn btn-primary btn-full">Create Account</button>
-        <p class="auth-switch">Already have an account? <a href="#" id="go-login">Sign In</a></p>
-      </form>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="strip-inner">
+      <span>مصمّمة لـ</span>
+      <span>· أصحاب المشاريع الصغيرة</span>
+      <span>· صنّاع المحتوى</span>
+      <span>· وكالات التسويق</span>
+      <span>· المتاجر الإلكترونية</span>
+      <span>· المدربين والاستشاريين</span>
     </div>
   </div>
 
-  <!-- DASHBOARD -->
-  <div id="dashboard" class="dashboard hidden">
+  <section class="section" id="features">
+    <div class="section-head reveal">
+      <span class="eyebrow">المنصة</span>
+      <h2>من الفكرة إلى الأداء، بلا انقطاع</h2>
+      <p>
+        كل خطوة مرتبطة بالتي بعدها: الترند يغذّي الاستوديو، والاستوديو يملأ التقويم، والتقويم يغذّي التحليلات،
+        والتحليلات تعود لتحسّن الاقتراح القادم.
+      </p>
+    </div>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <i class="fa-solid fa-rocket"></i>
-        <span>ContentPro</span>
+    <div class="features">
+      <article class="card reveal">
+        <div class="icon" aria-hidden="true">🔥</div>
+        <h3>Trend Radar</h3>
+        <p>فورمات المحتوى الصاعدة مرتّبة حسب منصتك ومجالك ومنطقتك، مع درجة لكل فورمات ومدى تشبّعه.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon" aria-hidden="true">✍️</div>
+        <h3>Content Studio</h3>
+        <p>هوكات بديلة، سكربت مقسّم بالثواني، قائمة لقطات، كابشن، هاشتاقات وCTA — جاهزة للتصوير اليوم.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon" aria-hidden="true">🎥</div>
+        <h3>Video Intelligence</h3>
+        <p>يقيس فيديوك داخل متصفحك: المدة، الأبعاد، إيقاع القص، ولحظات الثبات التي يفقد فيها المشاهد انتباهه.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon" aria-hidden="true">🧠</div>
+        <h3>Brand Brain</h3>
+        <p>نبرة البراند، الجمهور، ما تبيعه، وهدفك الأساسي — محفوظة ومطبّقة على كل مخرج بلا إعادة شرح.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon" aria-hidden="true">🗓️</div>
+        <h3>تقويم ذكي</h3>
+        <p>خطة شهرية توازن بين الوصول والثقة والتحويل حسب هدفك، بضغطة واحدة إلى التقويم.</p>
+      </article>
+      <article class="card reveal">
+        <div class="icon" aria-hidden="true">📈</div>
+        <h3>تحليلات تشرح لا تعرض</h3>
+        <p>ماذا نجح، لماذا نجح، وما الخطوة التالية — مبنية على أرقامك أنت، ولا تُستنتج قبل توفّر عيّنة كافية.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="how">
+    <div class="section-head reveal">
+      <span class="eyebrow">كيف تعمل؟</span>
+      <h2>أربع خطوات، وأسبوعك جاهز</h2>
+      <p>الهدف ليس أن تنتج محتوى أكثر، بل أن يكون لكل منشور دور واضح في نمو مشروعك.</p>
+    </div>
+
+    <div class="steps">
+      <article class="step reveal">
+        <h3>عرّف براندك</h3>
+        <p>دقيقتان: المجال، الجمهور، النبرة، والهدف. هذه القاعدة التي يبني عليها كل شيء بعدها.</p>
+      </article>
+      <article class="step reveal">
+        <h3>اختر فورمات</h3>
+        <p>افتح الرادار واختر فورمات مناسبًا لمجالك ومنصتك بدرجة عالية وتشبّع منخفض.</p>
+      </article>
+      <article class="step reveal">
+        <h3>ولّد ونفّذ</h3>
+        <p>احصل على هوك وسكربت وقائمة لقطات وكابشن، ثم أرسله مباشرة إلى التقويم.</p>
+      </article>
+      <article class="step reveal">
+        <h3>سجّل وتعلّم</h3>
+        <p>أدخل أرقام كل منشور بعد نشره، ودع المنصة تستخرج النمط الذي يعمل معك تحديدًا.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="video">
+    <div class="split">
+      <div class="reveal">
+        <span class="eyebrow">Video Intelligence</span>
+        <h2>حلّل الفيديو قبل ما تنشره</h2>
+        <p style="color: var(--text-2); font-size: 17px">
+          اسحب الفيديو داخل المتصفح — لا يُرفع إلى أي خادم. المنصة تقيس المدة والأبعاد وتغيّرات المشهد،
+          وتقرأ الهوك والـCTA اللذين تكتبهما، ثم تعطيك تقييمًا لكل عنصر مع أول تحسين يستحق التنفيذ.
+        </p>
+        <ul class="checklist">
+          <li><span class="tick">✓</span><span><b>قياس فعلي لا تخمين</b>كل رقم مأخوذ من ملفك نفسه، ونقول لك بوضوح ما هو تقدير وما هو قياس.</span></li>
+          <li><span class="tick">✓</span><span><b>خريطة لحظات الهبوط</b>يحدّد المشاهد الثابتة الطويلة التي يغادر عندها المشاهد.</span></li>
+          <li><span class="tick">✓</span><span><b>خصوصية كاملة</b>الفيديو لا يغادر جهازك؛ تُرسل القياسات فقط.</span></li>
+        </ul>
       </div>
-      <nav class="sidebar-nav">
-        <a href="#" class="nav-item active" data-page="overview">
-          <i class="fa-solid fa-chart-pie"></i> Overview
-        </a>
-        <a href="#" class="nav-item" data-page="content">
-          <i class="fa-solid fa-file-lines"></i> Content
-        </a>
-        <a href="#" class="nav-item" data-page="campaigns">
-          <i class="fa-solid fa-bullhorn"></i> Campaigns
-        </a>
-        <a href="#" class="nav-item" data-page="analytics">
-          <i class="fa-solid fa-chart-line"></i> Analytics
-        </a>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="user-info">
-          <div class="user-avatar" id="user-avatar">U</div>
+
+      <div class="panel-visual reveal" aria-hidden="true">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px">
           <div>
-            <div class="user-name" id="user-name">User</div>
-            <div class="user-role" id="user-role">editor</div>
+            <small style="color: var(--muted)">Video Score</small>
+            <h3 style="margin: 4px 0; font-size: 30px">84 / 100</h3>
           </div>
+          <span class="badge rise">قوي</span>
         </div>
-        <button class="btn-logout" id="logout-btn" title="Logout">
-          <i class="fa-solid fa-arrow-right-from-bracket"></i>
-        </button>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-
-      <!-- Overview Page -->
-      <div id="page-overview" class="page active">
-        <div class="page-header">
-          <h2>Overview</h2>
-          <span class="date" id="today-date"></span>
-        </div>
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon blue"><i class="fa-solid fa-file-lines"></i></div>
-            <div class="stat-info">
-              <div class="stat-value" id="stat-total-content">—</div>
-              <div class="stat-label">Total Content</div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon green"><i class="fa-solid fa-circle-check"></i></div>
-            <div class="stat-info">
-              <div class="stat-value" id="stat-published">—</div>
-              <div class="stat-label">Published</div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon purple"><i class="fa-solid fa-bullhorn"></i></div>
-            <div class="stat-info">
-              <div class="stat-value" id="stat-campaigns">—</div>
-              <div class="stat-label">Campaigns</div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon orange"><i class="fa-solid fa-bolt"></i></div>
-            <div class="stat-info">
-              <div class="stat-value" id="stat-active-campaigns">—</div>
-              <div class="stat-label">Active Campaigns</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row-2">
-          <div class="card">
-            <h3>Content by Type</h3>
-            <div id="content-by-type" class="bar-list"></div>
-          </div>
-          <div class="card">
-            <h3>Top Performing Content</h3>
-            <div id="top-content-list" class="top-list"></div>
-          </div>
+        <div class="score-row"><span>الهوك</span><div class="progress"><i style="width: 91%"></i></div><b>91</b></div>
+        <div class="score-row"><span>الإيقاع</span><div class="progress"><i style="width: 78%"></i></div><b>78</b></div>
+        <div class="score-row"><span>المدة</span><div class="progress"><i style="width: 95%"></i></div><b>95</b></div>
+        <div class="score-row"><span>النصوص</span><div class="progress"><i style="width: 94%"></i></div><b>94</b></div>
+        <div class="score-row"><span>الـCTA</span><div class="progress"><i style="width: 64%"></i></div><b>64</b></div>
+        <div style="background: #0e1015; border: 1px solid var(--line-soft); border-radius: 12px; padding: 14px; margin-top: 16px">
+          <b style="display: block; margin-bottom: 4px">⚠️ مشهد ثابت عند 00:07</b>
+          <span style="color: var(--text-2); font-size: 13px">7.2 ثانية بدون تغيّر بصري — اقطعه أو أضف Pattern Interrupt.</span>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Content Page -->
-      <div id="page-content" class="page">
-        <div class="page-header">
-          <h2>Content</h2>
-          <button class="btn btn-primary" id="new-content-btn">
-            <i class="fa-solid fa-plus"></i> New Content
-          </button>
-        </div>
+  <section class="section" id="pricing">
+    <div class="section-head reveal">
+      <span class="eyebrow">الأسعار</span>
+      <h2>خطط بسيطة تكبر معك</h2>
+      <p>ابدأ بأي باقة وغيّرها متى شئت. كل الباقات تشمل المنصة كاملة — الفرق في الحصص وعدد البراندات.</p>
+    </div>
 
-        <div class="filters">
-          <select id="content-filter-type">
-            <option value="">All Types</option>
-            <option value="article">Article</option>
-            <option value="blog">Blog</option>
-            <option value="social_post">Social Post</option>
-            <option value="email">Email</option>
-            <option value="video_script">Video Script</option>
-            <option value="infographic">Infographic</option>
-          </select>
-          <select id="content-filter-status">
-            <option value="">All Statuses</option>
-            <option value="draft">Draft</option>
-            <option value="review">Review</option>
-            <option value="published">Published</option>
-            <option value="archived">Archived</option>
-          </select>
-          <button class="btn btn-secondary" id="apply-content-filter">Filter</button>
-        </div>
+    <div class="pricing" id="pricingGrid">
+      <article class="price-card reveal">
+        <h3>Creator</h3>
+        <div class="price">49 <small>ر.س / شهريًا</small></div>
+        <p class="tagline">لصنّاع المحتوى الأفراد الذين يبنون حضورهم.</p>
+        <ul class="ticks">
+          <li>براند واحد</li>
+          <li>30 فكرة/سكربت شهريًا</li>
+          <li>Trend Radar كامل</li>
+          <li>5 تحليلات فيديو شهريًا</li>
+          <li>تقويم محتوى ذكي</li>
+        </ul>
+        <a class="btn btn-ghost btn-block" href="/app#register?plan=creator">ابدأ الآن</a>
+      </article>
 
-        <div class="table-container">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Author</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="content-table-body">
-              <tr><td colspan="6" class="loading-row">Loading...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <article class="price-card popular reveal">
+        <h3>Business</h3>
+        <div class="price">129 <small>ر.س / شهريًا</small></div>
+        <p class="tagline">لأصحاب المشاريع الذين يريدون المحتوى أن يجلب عملاء.</p>
+        <ul class="ticks">
+          <li>براندان</li>
+          <li>200 فكرة/سكربت شهريًا</li>
+          <li>50 تحليل فيديو شهريًا</li>
+          <li>تحليلات الأداء والتعلّم</li>
+          <li>خطة أسبوعية مقترحة</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="/app#register?plan=business">ابدأ بـBusiness</a>
+      </article>
 
-      <!-- Campaigns Page -->
-      <div id="page-campaigns" class="page">
-        <div class="page-header">
-          <h2>Campaigns</h2>
-          <button class="btn btn-primary" id="new-campaign-btn">
-            <i class="fa-solid fa-plus"></i> New Campaign
-          </button>
-        </div>
+      <article class="price-card reveal">
+        <h3>Agency</h3>
+        <div class="price">299 <small>ر.س / شهريًا</small></div>
+        <p class="tagline">للوكالات التي تدير محتوى عدة عملاء في مكان واحد.</p>
+        <ul class="ticks">
+          <li>10 عملاء (Workspaces)</li>
+          <li>توليد غير محدود</li>
+          <li>تحليل فيديو غير محدود</li>
+          <li>تقارير جاهزة للعملاء</li>
+          <li>دعم ذو أولوية</li>
+        </ul>
+        <a class="btn btn-ghost btn-block" href="/app#register?plan=agency">جرّب Agency</a>
+      </article>
+    </div>
+  </section>
 
-        <div class="campaigns-grid" id="campaigns-grid">
-          <div class="loading-row">Loading...</div>
-        </div>
-      </div>
+  <section class="section" id="faq">
+    <div class="section-head reveal">
+      <span class="eyebrow">أسئلة شائعة</span>
+      <h2>قبل ما تبدأ</h2>
+    </div>
 
-      <!-- Analytics Page -->
-      <div id="page-analytics" class="page">
-        <div class="page-header">
-          <h2>Analytics</h2>
-        </div>
-        <div class="row-2">
-          <div class="card">
-            <h3>Content by Status</h3>
-            <div id="analytics-by-status" class="bar-list"></div>
-          </div>
-          <div class="card">
-            <h3>Content by Type</h3>
-            <div id="analytics-by-type" class="bar-list"></div>
-          </div>
-        </div>
-        <div class="card mt-16">
-          <h3>Top Content Performance</h3>
-          <div class="table-container">
-            <table class="data-table">
-              <thead>
-                <tr><th>Title</th><th>Type</th><th>Views</th><th>Likes</th><th>Published</th></tr>
-              </thead>
-              <tbody id="analytics-top-table"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <div class="faq">
+      <details class="reveal" open>
+        <summary>هل أحتاج مفتاح ذكاء اصطناعي حتى تعمل المنصة؟</summary>
+        <p>
+          لا. المنصة تعمل كاملة بمولّد داخلي يبني السكربتات من قاعدة براندك وهدفك والفورمات المختار.
+          وإذا أضفت مفتاح Anthropic في الإعدادات، يتولى Claude كتابة النصوص، ويعود المولّد الداخلي تلقائيًا عند أي انقطاع.
+        </p>
+      </details>
+      <details class="reveal">
+        <summary>هل يُرفع الفيديو إلى خوادمكم؟</summary>
+        <p>
+          لا. القياس يتم داخل متصفحك عبر عنصر الفيديو والكانفس، ولا يُرسل إلا الأرقام الناتجة (المدة، الأبعاد، مواضع القطع)
+          مع ما تكتبه من هوك وCTA.
+        </p>
+      </details>
+      <details class="reveal">
+        <summary>من أين تأتي درجات الترند؟</summary>
+        <p>
+          من مكتبة فورمات مُنسّقة داخل المنصة، والدرجة تُحسب من زخم الفورمات ومدى تشبّعه وملاءمته لمنصتك ومجالك.
+          نقولها بوضوح داخل المنتج: هذه ليست قراءة مباشرة من واجهات المنصات الاجتماعية.
+        </p>
+      </details>
+      <details class="reveal">
+        <summary>هل الأرقام في التحليلات حقيقية؟</summary>
+        <p>
+          كل رقم في التحليلات محسوب من المحتوى الذي سجّلته أنت. ولا تُستخرج أي «أنماط» قبل توفّر عيّنة كافية —
+          المنصة تخبرك كم منشورًا ينقصك بدل أن تخترع استنتاجًا.
+        </p>
+      </details>
+      <details class="reveal">
+        <summary>هل تناسب الوكالات التي تدير عدة عملاء؟</summary>
+        <p>
+          نعم. كل عميل يُدار كبراند مستقل بهويته وتقويمه وتحليلاته، وباقة Agency تسمح بعشرة براندات.
+        </p>
+      </details>
+      <details class="reveal">
+        <summary>كيف أدفع؟</summary>
+        <p>
+          هذه النسخة تُشغَّل بدون مزوّد دفع مربوط، فتغيير الباقة يحدّث الحصص فورًا دون تحصيل. ربط بوابة الدفع
+          هو الخطوة الوحيدة المتبقية قبل التشغيل التجاري.
+        </p>
+      </details>
+    </div>
+  </section>
 
-    </main>
-  </div>
+  <section class="cta-band reveal">
+    <h2>ابدأ أسبوعك بخطة، لا بصفحة بيضاء</h2>
+    <p>أنشئ حسابك في أقل من دقيقة، أو افتح الحساب التجريبي وشاهد المنصة وهي ممتلئة ببيانات فعلية.</p>
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap">
+      <a class="btn btn-primary" href="/app#register">أنشئ حسابي</a>
+      <a class="btn btn-ghost" href="/app#demo">دخول تجريبي</a>
+    </div>
+  </section>
+</main>
 
-  <!-- MODAL: New/Edit Content -->
-  <div id="content-modal" class="modal hidden">
-    <div class="modal-overlay"></div>
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 id="content-modal-title">New Content</h3>
-        <button class="modal-close" data-modal="content-modal"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <form id="content-form">
-        <input type="hidden" id="content-id" />
-        <div class="form-group">
-          <label>Title</label>
-          <input type="text" id="content-title" placeholder="Enter title" required />
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Type</label>
-            <select id="content-type">
-              <option value="article">Article</option>
-              <option value="blog">Blog</option>
-              <option value="social_post">Social Post</option>
-              <option value="email">Email</option>
-              <option value="video_script">Video Script</option>
-              <option value="infographic">Infographic</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Status</label>
-            <select id="content-status">
-              <option value="draft">Draft</option>
-              <option value="review">Review</option>
-              <option value="published">Published</option>
-              <option value="archived">Archived</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Body</label>
-          <textarea id="content-body" rows="5" placeholder="Write your content here..." required></textarea>
-        </div>
-        <div class="form-group">
-          <label>Tags (comma separated)</label>
-          <input type="text" id="content-tags" placeholder="marketing, seo, tips" />
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary modal-close" data-modal="content-modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save</button>
-        </div>
-      </form>
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <a class="brand" href="/" style="margin-bottom: 12px">
+        <span class="brandmark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19V7l5 6 5-6 5 6v6" />
+          </svg>
+        </span>
+        <span>MOHTAWA</span>
+      </a>
+      <p style="color: var(--muted); font-size: 14px; max-width: 320px">
+        نظام تشغيل التسويق بالمحتوى للسوق العربي — من الفكرة إلى النتيجة.
+      </p>
+    </div>
+    <div>
+      <h4>المنتج</h4>
+      <ul>
+        <li><a href="#features">المميزات</a></li>
+        <li><a href="#how">كيف تعمل</a></li>
+        <li><a href="#pricing">الأسعار</a></li>
+        <li><a href="/app#demo">حساب تجريبي</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>الموارد</h4>
+      <ul>
+        <li><a href="#faq">أسئلة شائعة</a></li>
+        <li><a href="/api/health">حالة الخدمة</a></li>
+        <li><a href="https://github.com/raghad87345/content-marketing-services" rel="noopener">المستودع</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>ابدأ</h4>
+      <ul>
+        <li><a href="/app#register">إنشاء حساب</a></li>
+        <li><a href="/app#login">تسجيل الدخول</a></li>
+      </ul>
     </div>
   </div>
-
-  <!-- MODAL: New/Edit Campaign -->
-  <div id="campaign-modal" class="modal hidden">
-    <div class="modal-overlay"></div>
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 id="campaign-modal-title">New Campaign</h3>
-        <button class="modal-close" data-modal="campaign-modal"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <form id="campaign-form">
-        <input type="hidden" id="campaign-id" />
-        <div class="form-group">
-          <label>Campaign Name</label>
-          <input type="text" id="campaign-name" placeholder="Enter campaign name" required />
-        </div>
-        <div class="form-group">
-          <label>Description</label>
-          <textarea id="campaign-description" rows="3" placeholder="Campaign description..."></textarea>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Start Date</label>
-            <input type="date" id="campaign-start" required />
-          </div>
-          <div class="form-group">
-            <label>End Date</label>
-            <input type="date" id="campaign-end" required />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Budget (USD)</label>
-            <input type="number" id="campaign-budget" placeholder="0" min="0" />
-          </div>
-          <div class="form-group">
-            <label>Status</label>
-            <select id="campaign-status">
-              <option value="planning">Planning</option>
-              <option value="active">Active</option>
-              <option value="paused">Paused</option>
-              <option value="completed">Completed</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary modal-close" data-modal="campaign-modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save</button>
-        </div>
-      </form>
-    </div>
+  <div class="footer-bottom">
+    <span>© <span id="year">2026</span> MOHTAWA. جميع الحقوق محفوظة.</span>
+    <span>صُنعت للسوق العربي · RTL أولًا</span>
   </div>
+</footer>
 
-  <!-- Toast -->
-  <div id="toast" class="toast hidden"></div>
-
-  <script src="js/api.js"></script>
-  <script src="js/app.js"></script>
+<script src="/js/landing.js" defer></script>
 </body>
 </html>

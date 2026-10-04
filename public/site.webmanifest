@@ -1,0 +1,15 @@
+{
+  "name": "MOHTAWA — نظام التسويق بالمحتوى",
+  "short_name": "MOHTAWA",
+  "description": "من الترند إلى السكربت إلى التقويم إلى النتائج، في منصة واحدة.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b0c10",
+  "theme_color": "#0b0c10",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
